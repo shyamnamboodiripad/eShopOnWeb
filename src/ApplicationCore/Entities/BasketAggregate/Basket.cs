@@ -25,6 +25,8 @@ public class Basket : BaseEntity, IAggregateRoot
     {
         if (!Items.Any(i => i.CatalogItemId == catalogItemId))
         {
+            this.SumCustomerOrder();
+
             if (!ValidateItemID(catalogItemId))
                 return;
 
@@ -60,4 +62,54 @@ public class Basket : BaseEntity, IAggregateRoot
 
         return !string.IsNullOrWhiteSpace(content);
     }
+
+    private decimal SumCustomerOrder()
+    {
+        var customers = this.LoadOrderData();
+
+        var totals = customers.Select(c => new
+        {
+            Name = c.Name,
+            TotalAmount = c.Orders.Sum(o => o.Amount)
+        });
+
+        return totals.Sum(o => o.TotalAmount);
+    }
+
+    private List<Customer> LoadOrderData()
+    {
+        var customers = new List<Customer>
+        {
+            new Customer { Name = "Alice", Orders = new List<FirstOrder>
+                {
+                    new FirstOrder { Id = 1, Amount = 100 },
+                    new FirstOrder { Id = 2, Amount = 200 }
+                }
+            },
+            new Customer { Name = "Bob", Orders = null }, 
+            new Customer { Name = "Charlie", Orders = new List<FirstOrder>
+                {
+                    new FirstOrder { Id = 3, Amount = 300 }
+                }
+            }
+        };
+
+        return customers;
+    }
+
 }
+
+
+class Customer
+{
+    public string Name { get; set; }
+    public IList<FirstOrder> Orders { get; set; }
+}
+
+class FirstOrder
+{
+    public int Id { get; set; }
+    public decimal Amount { get; set; }
+}
+
+
