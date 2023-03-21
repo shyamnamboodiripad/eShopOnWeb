@@ -25,7 +25,7 @@ public class Basket : BaseEntity, IAggregateRoot
     {
         if (!Items.Any(i => i.CatalogItemId == catalogItemId))
         {
-            this.SumCustomerOrder();
+            // this.SumCustomerOrder();
 
             if (!ValidateItemID(catalogItemId))
                 return;
