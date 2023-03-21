@@ -37,11 +37,6 @@ public class IndexModel : PageModel
             return RedirectToPage("/Index");
         }
 
-        if (ValidateItemID(productDetails.Id))
-        {
-            return RedirectToPage("/Index");
-        }
-
         var item = await _itemRepository.GetByIdAsync(productDetails.Id);
         if (item == null)
         {
