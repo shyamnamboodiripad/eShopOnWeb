@@ -43,7 +43,7 @@ public class BasketBuilder
         _basket = basketMock.Object;
         for (int i = 0; i < ct; i++)
         {
-            _basket.AddItem(2+i, i + 0.40m, 4 % (i + 1));
+            _basket.AddItem(2+i, i + 0.40m, (4 % i) + 1);
         }
         return _basket;
     }

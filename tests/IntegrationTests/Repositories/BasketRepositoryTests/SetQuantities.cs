@@ -47,7 +47,6 @@ public class SetQuantities
         await _basketRepository.AddAsync(basket);
         _catalogContext.SaveChanges();
 
-        
         Assert.Equal(itemCt, basket.Items.Count);
     }
 }
