@@ -10,7 +10,7 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Specifications;
 public class BasketWithItems
 {
     private readonly int _testBasketId = 123;
-    private readonly string _buyerId = "Test buyerId";
+    private readonly string _buyerId = "xxxTest buyerId";
 
     [Fact]
     public void MatchesBasketWithGivenBasketId()

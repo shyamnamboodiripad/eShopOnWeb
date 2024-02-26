@@ -36,4 +36,15 @@ public class BasketBuilder
         _basket.AddItem(2, 3.40m, 4);
         return _basket;
     }
+
+    public Basket WithBasketItems(int ct)
+    {
+        var basketMock = new Mock<Basket>(BasketBuyerId);
+        _basket = basketMock.Object;
+        for (int i = 0; i < ct; i++)
+        {
+            _basket.AddItem(2+i, i + 0.40m, 4 % (i + 1));
+        }
+        return _basket;
+    }
 }
