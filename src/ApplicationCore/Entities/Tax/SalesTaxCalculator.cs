@@ -10,10 +10,4 @@ public class SalesTaxCalculator
         var taxRate = StateAndLocalTaxHelper.GetTaxRate(city, state);
         return total * taxRate / 100;
     }
-
-    public virtual decimal AddSalesTax(decimal total, string city, string state)
-    {
-        var taxRate = StateAndLocalTaxHelper.GetTaxRate(city, state);
-        return total + (total * taxRate / 100);
-    }
 }

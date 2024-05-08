@@ -10,10 +10,4 @@ public class AdvancedSalesTaxCalculator : SalesTaxCalculator
         // TODO: Some advanced tax processing.
         return base.GetSalesTax(total, city, state);
     }
-
-    public override decimal AddSalesTax(decimal total, string city, string state)
-    {
-        // TODO: Some advanced tax processing.
-        return base.AddSalesTax(total, city, state);
-    }
 }

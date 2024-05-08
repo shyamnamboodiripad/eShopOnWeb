@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;   
-using Microsoft.eShopWeb.ApplicationCore.Entities.Tax;
+﻿using Microsoft.eShopWeb.ApplicationCore.Entities.Tax;
 using Xunit;
 
 namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Entities.Tax;
@@ -12,34 +10,34 @@ public class SalesTaxCalculatorTests
     {
         var calculator = new SalesTaxCalculator();
         var total = 100;
-        var totalWithTax = calculator.GetSalesTax(total, "Redmond", "WA");
-        Assert.Equal(9.5m, totalWithTax);
+        var tax = calculator.GetSalesTax(total, "Redmond", "WA");
+        Assert.Equal(9.5m, tax);
     }
 
     [Fact]
-    public void CanGetSalesTaxForLA()
+    public void CanGetSalesTaxForLosAngeles()
     {
         var calculator = new SalesTaxCalculator();
         var total = 100;
-        var totalWithTax = calculator.GetSalesTax(total, "Los Angeles", "CA");
-        Assert.Equal(10.45m, totalWithTax);
+        var tax = calculator.GetSalesTax(total, "Los Angeles", "CA");
+        Assert.Equal(10.45m, tax);
     }
 
     [Fact]
-    public void CanAddSalesTaxForRedmond()
+    public void CanGetSalesTaxForSeattle()
     {
         var calculator = new SalesTaxCalculator();
         var total = 100;
-        var totalWithTax = calculator.AddSalesTax(total, "Redmond", "WA");
-        Assert.Equal(109.5m, totalWithTax);
+        var tax = calculator.GetSalesTax(total, "Seattle", "WA");
+        Assert.Equal(10, tax);
     }
 
     [Fact]
-    public void CanAddSalesTaxForLA()
+    public void CanGetSalesTaxForSanFrancisco()
     {
         var calculator = new SalesTaxCalculator();
         var total = 100;
-        var totalWithTax = calculator.AddSalesTax(total, "Los Angeles", "CA");
-        Assert.Equal(110.45m, totalWithTax);
+        var tax = calculator.GetSalesTax(total, "San Francisco", "CA");
+        Assert.Equal(10.75m, tax);
     }
 }
