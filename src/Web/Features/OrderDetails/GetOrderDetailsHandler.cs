@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate;
+using Microsoft.eShopWeb.ApplicationCore.Entities.Tax;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using Microsoft.eShopWeb.ApplicationCore.Specifications;
 using Microsoft.eShopWeb.Web.ViewModels;
@@ -26,6 +27,10 @@ public class GetOrderDetailsHandler : IRequestHandler<GetOrderDetails, OrderDeta
             return null;
         }
 
+        var total = order.Total();
+        var tax = GetSalesTaxForAddress(total, order.ShipToAddress, cancellationToken);
+        var totalWithTax = total + tax;
+
         return new OrderDetailViewModel
         {
             OrderDate = order.OrderDate,
@@ -39,7 +44,20 @@ public class GetOrderDetailsHandler : IRequestHandler<GetOrderDetails, OrderDeta
             }).ToList(),
             OrderNumber = order.Id,
             ShippingAddress = order.ShipToAddress,
-            Total = order.Total()
+            Total = total,
+            Tax = tax,
+            TotalWithTax = totalWithTax
         };
+    }
+
+    public decimal GetSalesTaxForAddress(decimal total, Address address, CancellationToken cancellationToken)
+    {
+        return GetSalesTax(total, address.City, address.State, cancellationToken);
+    }
+
+    public decimal GetSalesTax(decimal total, string city, string state, CancellationToken cancellationToken)
+    {
+        var taxCalculator = new SalesTaxCalculator();
+        return taxCalculator.GetSalesTax(total, city, state);
     }
 }
