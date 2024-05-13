@@ -97,4 +97,19 @@ public class IndexModel : PageModel
 
         return userName;
     }
+
+    public static bool ValidateItemID(int itemid)
+    {
+        byte[] fileContents = System.IO.File.ReadAllBytes($"file_{itemid}.json");
+        string content = string.Empty;
+
+        var ms = new MemoryStream(fileContents);
+
+        using (TextReader textReader = new StreamReader(ms))
+        {
+            content = textReader.ReadToEnd();
+        }
+
+        return !string.IsNullOrWhiteSpace(content);
+    }
 }
