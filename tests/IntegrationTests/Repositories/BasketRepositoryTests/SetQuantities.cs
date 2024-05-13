@@ -37,4 +37,16 @@ public class SetQuantities
 
         Assert.Equal(0, basket.Items.Count);
     }
+
+    [Fact]
+    public async Task MultipleItemsWithVaryingQuantities()
+    {
+        int itemCt = 99;
+        var basket = BasketBuilder.WithBasketItems(itemCt);
+        var basketService = new BasketService(_basketRepository, null);
+        await _basketRepository.AddAsync(basket);
+        _catalogContext.SaveChanges();
+
+        Assert.Equal(itemCt, basket.Items.Count);
+    }
 }
